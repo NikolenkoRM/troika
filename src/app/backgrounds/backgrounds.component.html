@@ -1,0 +1,35 @@
+<main class="h-full flex flex-col">
+  @if (backgrounds$ | async; as backgrounds) {
+    <mat-toolbar class="backgrounds-header">
+      <button mat-icon-button class="mr-4" (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <h1>Предыстории</h1>
+    </mat-toolbar>
+
+    <mat-drawer-container class="flex-1" autosize>
+      <mat-drawer #drawer [opened]="true" [mode]="(sidenavService.sidenavMode$ | async) || 'over'">
+        <mat-nav-list class="backgrounds-sidenav">
+          @for (background of backgrounds$ | async; track background) {
+            <a
+              mat-list-item
+              [routerLink]="background.name"
+              routerLinkActive="!underline"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="sidenavService.onClickLink(drawer)"
+              >{{ background.roll?.value }}. {{ background.name }}</a
+            >
+          }
+        </mat-nav-list>
+      </mat-drawer>
+
+      <mat-drawer-content #drawerContent>
+        <div class="background-content py-8" [ngClass]="screenResponsiveService.contentClassList$ | async">
+          <router-outlet></router-outlet>
+        </div>
+      </mat-drawer-content>
+    </mat-drawer-container>
+  } @else {
+    <app-loader></app-loader>
+  }
+</main>

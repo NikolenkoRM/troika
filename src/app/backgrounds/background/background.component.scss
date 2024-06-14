@@ -1,0 +1,17 @@
+.possessions ul {
+  list-style: inside;
+}
+
+.background {
+  &-text {
+    max-width: 600px;
+  }
+
+  &-image {
+    display: block;
+    max-height: 60vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+}

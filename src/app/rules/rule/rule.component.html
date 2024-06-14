@@ -1,0 +1,19 @@
+@if (rule$ | async; as rule) {
+  <article>
+    <h1 class="text-3xl font-bold">{{ getHeading(rule) }}</h1>
+    @for (text of rule.text; track $index) {
+      <div [innerHTML]="text"></div>
+    }
+
+    @for (subarticle of rule.subarticles; track $index) {
+      <section>
+        <h2 class="text-2xl font-bold">{{ getHeading(subarticle) }}</h2>
+        @for (text of subarticle.text; track $index) {
+          <div [innerHTML]="text"></div>
+        }
+      </section>
+    }
+  </article>
+} @else {
+  <app-loader></app-loader>
+}

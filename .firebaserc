@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "troika-ce0f3": {
+      "hosting": {
+        "troika": [
+          "troika-rpg"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "troika-ce0f3"
+  }
+}

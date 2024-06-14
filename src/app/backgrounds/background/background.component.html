@@ -1,0 +1,48 @@
+@if (background$ | async; as background) {
+  <article>
+    <h1 class="text-3xl font-bold">{{ background.roll?.value }}. {{ background.name }}</h1>
+
+    <div class="background-content flex gap-8 my-4" [ngClass]="{ 'flex-col-reverse': isMobileDevice$ | async }">
+      <div class="background-text">
+        <p class="background-text">{{ background.text }}</p>
+
+        <div class="possessions mt-8">
+          <h2 class="text-2xl font-bold">Имущество</h2>
+          <ul>
+            @for (item of background.possessions; track item) {
+              <li>{{ item }}</li>
+            }
+          </ul>
+        </div>
+
+        @if (background.skills) {
+          <div class="skills mt-8">
+            <h2 class="text-2xl font-bold">Навыки</h2>
+            <ul>
+              @for (skill of background.skills; track skill) {
+                <li>
+                  <b>{{ skill.value }}</b> - {{ skill.name }}
+                </li>
+              }
+            </ul>
+          </div>
+        }
+
+        @if (background.special) {
+          <div class="special mt-8">
+            <h2 class="text-2xl font-bold">Особенность</h2>
+            <p>{{ background.special }}</p>
+          </div>
+        }
+      </div>
+
+      <img
+        class="background-image"
+        [ngClass]="{ 'self-center': isMobileDevice$ | async, 'self-start': (isMobileDevice$ | async) === false }"
+        [src]="imageUrl | async"
+        [alt]="background.name" />
+    </div>
+  </article>
+} @else {
+  <app-loader></app-loader>
+}

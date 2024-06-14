@@ -1,0 +1,39 @@
+<main class="h-full flex flex-col">
+  @if (rules$ | async; as rules) {
+    <mat-toolbar class="rules-header">
+      <button mat-icon-button class="mr-4" (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <h1>Правила</h1>
+    </mat-toolbar>
+
+    <mat-drawer-container #drawerContainer class="flex-1" autosize>
+      <mat-drawer #drawer [opened]="true" [mode]="(sidenavService.sidenavMode$ | async) || 'over'">
+        <mat-nav-list class="rules-sidenav">
+          @for (rule of rules$ | async; track rule) {
+            <a
+              mat-list-item
+              [routerLink]="rule.paragraph"
+              routerLinkActive="!underline"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="sidenavService.onClickLink(drawer)"
+              >{{ rule.paragraph }}. {{ rule.heading }}</a
+            >
+          }
+        </mat-nav-list>
+      </mat-drawer>
+
+      <mat-drawer-content #drawerContent>
+        <div class="rules-content p-8">
+          <router-outlet></router-outlet>
+        </div>
+
+        <div class="paginator px-8">
+          <app-paginator (next)="paginatorNext()"></app-paginator>
+        </div>
+      </mat-drawer-content>
+    </mat-drawer-container>
+  } @else {
+    <app-loader></app-loader>
+  }
+</main>

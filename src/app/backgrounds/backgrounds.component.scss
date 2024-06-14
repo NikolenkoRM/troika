@@ -1,0 +1,15 @@
+@import '../../assets/styles/variables.scss';
+
+.backgrounds {
+  &-sidenav {
+    width: 320px;
+  }
+
+  &-header {
+    border-bottom: $default-border;
+  }
+
+  &-content {
+    min-width: 300px;
+  }
+}

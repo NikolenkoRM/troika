@@ -1,0 +1,33 @@
+::ng-deep {
+  article {
+    max-width: 600px;
+  }
+
+  section {
+    margin-top: 2rem;
+  }
+
+  table {
+    border-collapse: collapse;
+    margin-top: 1rem;
+    width: 100%;
+
+    td {
+      padding: 0 1rem;
+
+      &:first-child {
+        white-space: nowrap;
+      }
+    }
+  }
+
+  table,
+  th,
+  td {
+    border: 1px solid;
+  }
+
+  p {
+    margin-top: 0.5rem;
+  }
+}
