@@ -1,10 +1,8 @@
 @import '../assets/styles/variables.scss';
 
 .app {
-  @media only screen and (min-width: 768px) {
-    border-left: $default-border;
-    border-right: $default-border;
-  }
+  background-color: white;
+  box-shadow: 0 0 20px 10px #000000cc;
 }
 
 .app-header {
@@ -17,7 +15,6 @@
 }
 
 .app-footer {
-  border-top: 1px solid lightgray;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;

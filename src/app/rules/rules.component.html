@@ -14,7 +14,7 @@
             <a
               mat-list-item
               [routerLink]="rule.paragraph"
-              routerLinkActive="!underline"
+              routerLinkActive="!underline !font-bold"
               [routerLinkActiveOptions]="{ exact: true }"
               (click)="sidenavService.onClickLink(drawer)">
               {{ rule.paragraph }}. {{ rule.heading }}
