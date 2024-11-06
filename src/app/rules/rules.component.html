@@ -16,20 +16,26 @@
               [routerLink]="rule.paragraph"
               routerLinkActive="!underline"
               [routerLinkActiveOptions]="{ exact: true }"
-              (click)="sidenavService.onClickLink(drawer)"
-              >{{ rule.paragraph }}. {{ rule.heading }}</a
-            >
+              (click)="sidenavService.onClickLink(drawer)">
+              {{ rule.paragraph }}. {{ rule.heading }}
+            </a>
           }
         </mat-nav-list>
       </mat-drawer>
 
       <mat-drawer-content #drawerContent>
-        <div class="rules-content p-8">
-          <router-outlet></router-outlet>
-        </div>
+        <div class="rules-content h-full flex flex-col overflow-hidden">
+          <div class="flex-1 overflow-auto pl-8 py-8">
+            <router-outlet></router-outlet>
+          </div>
 
-        <div class="paginator px-8">
-          <app-paginator (next)="paginatorNext()"></app-paginator>
+          @if (currentParagraph$ | async; as currentParagraph) {
+            <div class="paginator px-8 py-4">
+              <app-paginator
+                (prev)="goToParagraph(currentParagraph - 1)"
+                (next)="goToParagraph(currentParagraph + 1)"></app-paginator>
+            </div>
+          }
         </div>
       </mat-drawer-content>
     </mat-drawer-container>

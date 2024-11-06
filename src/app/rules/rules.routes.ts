@@ -5,8 +5,12 @@ import { RulesComponent } from './rules.component';
 export const RULES_ROUTES: Routes = [
   {
     path: '',
+    redirectTo: '1',
+    pathMatch: 'full',
+  },
+  {
+    path: '',
     component: RulesComponent,
-    title: 'Правила',
     children: [
       {
         path: ':paragraph',

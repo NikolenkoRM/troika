@@ -48,7 +48,7 @@ export class BackgroundsComponent implements OnInit, AfterViewInit {
     map(backgrounds => backgrounds.sort((a, b) => (a.roll?.value || 0) - (b.roll?.value || 0)))
   );
 
-  public currentBackground$: Observable<string | null> = this.activatedRoute.children[0].paramMap.pipe(
+  public currentBackground$: Observable<string | null> = this.activatedRoute.children[0]?.paramMap.pipe(
     map(params => params.get('background'))
   );
 

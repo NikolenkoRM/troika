@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  /* {
+  {
     path: '',
     redirectTo: 'backgrounds',
     pathMatch: 'full',
-  }, */
+  },
   {
     path: 'backgrounds',
     loadChildren: () => import('./backgrounds/backgrounds.routes').then(r => r.BACKGROUNDS_ROUTES),

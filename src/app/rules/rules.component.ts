@@ -1,17 +1,16 @@
 import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatDrawerContent, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { Observable, map, take, tap } from 'rxjs';
+import { Observable, map, switchMap } from 'rxjs';
 import { ScreenResponsiveService } from '../services/screen-responsive.service';
 import { SidenavService } from '../services/sidenav.service';
 import { LoaderComponent } from '../shared/loader/loader.component';
 import { PaginatorComponent } from '../shared/paginator/paginator.component';
-import { IRuleArticle } from './rules';
 import { RulesService } from './rules.service';
 
 @Component({
@@ -35,7 +34,7 @@ import { RulesService } from './rules.service';
   styleUrl: './rules.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RulesComponent implements OnInit, AfterViewInit {
+export class RulesComponent {
   @ViewChild('drawerContent') public drawerContent!: MatDrawerContent;
 
   public readonly rulesService = inject(RulesService);
@@ -44,45 +43,23 @@ export class RulesComponent implements OnInit, AfterViewInit {
   public readonly activatedRoute = inject(ActivatedRoute);
   public readonly router = inject(Router);
 
-  private rules!: IRuleArticle[];
+  public readonly rules$ = this.rulesService.rules$;
 
-  public readonly rules$ = this.rulesService.rules$.pipe(
-    map(rules => rules.sort((a, b) => Number(a.paragraph) - Number(b.paragraph))),
-    tap(rules => (this.rules = rules))
-  );
+  public readonly currentParagraph$!: Observable<number | undefined>;
+  public readonly isFirst$!: Observable<boolean>;
+  public readonly isLast$!: Observable<boolean>;
 
-  public currentParagraph$: Observable<string | null> = this.activatedRoute.children[0].paramMap.pipe(
-    map(params => params.get('background'))
-  );
-
-  public readonly isFirst$ = this.currentParagraph$.pipe(map(paragraph => Number(paragraph) === 1));
-  public readonly isLast$ = this.currentParagraph$.pipe(map(paragraph => Number(paragraph) === this.rules.length + 1));
-
-  public ngOnInit(): void {
-    if (!this.activatedRoute.snapshot.params['paragraph']) {
-      this.rules$.pipe(take(1)).subscribe(rules => {
-        this.router.navigate(['rules', rules[0].paragraph]);
-      });
+  constructor() {
+    if (this.activatedRoute.firstChild) {
+      this.currentParagraph$ = this.activatedRoute.firstChild?.params.pipe(map(params => Number(params['paragraph'])));
+      this.isFirst$ = this.currentParagraph$.pipe(map(paragraph => paragraph === 1));
+      this.isLast$ = this.currentParagraph$.pipe(
+        switchMap(paragraph => this.rules$.pipe(map(rules => paragraph === rules.length + 1)))
+      );
     }
   }
 
-  public ngAfterViewInit(): void {
-    this.currentParagraph$.subscribe(() => this.drawerContent?.scrollTo({ top: 0 }));
-  }
-
-  public paginatorNext(): void {
-    this.currentParagraph$
-      .pipe(
-        take(1),
-        tap(currentParagraph => {
-          const i = this.rules.findIndex(rule => rule.paragraph === currentParagraph);
-          const nextRule = this.rules[i + 1];
-
-          if (nextRule) {
-            this.router.navigate(['rules', nextRule.paragraph]);
-          }
-        })
-      )
-      .subscribe();
+  public goToParagraph(paragraph: number): void {
+    this.router.navigate(['rules', paragraph]);
   }
 }
