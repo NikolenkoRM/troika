@@ -1,20 +1,16 @@
 @use '@angular/material' as mat;
 @use 'styles/themes/theme.scss' as themes;
+@use './app/app.component.scss' as app;
 
 @include mat.core();
 
-.light-theme {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
   @include mat.all-component-themes(themes.$light-theme);
-
-  color: #000000;
-  background-color: #ffffff;
-}
-
-.dark-theme {
-  @include mat.all-component-themes(themes.$dark-theme);
-
-  background-color: #333333;
-  color: #ffffff;
+  @include app.theme(themes.$light-theme);
 }
 
 html,
@@ -25,4 +21,13 @@ body {
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
+  background-image: url('./assets/images/troika.webp');
+  background-size: cover;
+  background-position: center center;
+}
+
+.dark-theme {
+  color: #ffffff;
+  @include mat.all-component-colors(themes.$dark-theme);
+  @include app.theme(themes.$dark-theme);
 }

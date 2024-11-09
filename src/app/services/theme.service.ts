@@ -4,13 +4,13 @@ import { inject, Injectable, Renderer2, RendererFactory2 } from '@angular/core';
   providedIn: 'root',
 })
 export class ThemeService {
-  private isDarkTheme = false;
+  public isDarkTheme = false;
   private renderer: Renderer2;
   private rendererFactory2 = inject(RendererFactory2);
 
   constructor() {
     this.renderer = this.rendererFactory2.createRenderer(null, null);
-    this.toggleTheme(false);
+    this.toggleTheme(true);
   }
 
   public toggleTheme(isDarkTheme?: boolean): void {

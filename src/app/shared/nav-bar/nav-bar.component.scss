@@ -1,0 +1,26 @@
+.mat-toolbar .title-img {
+  height: 48px;
+  width: auto;
+  cursor: pointer;
+}
+
+.mat-toolbar-row {
+  gap: 4rem;
+}
+
+.nav-bar {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+
+  mat-nav-list {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    width: 600px;
+  }
+
+  mat-list-item {
+    text-align: center;
+  }
+}

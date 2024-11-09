@@ -1,0 +1,24 @@
+<mat-toolbar class="app-header">
+  <mat-toolbar-row class="container mx-auto items-center">
+    <img class="title-img" src="assets/images/title.webp" alt="title" routerLink="/" />
+
+    <nav class="nav-bar">
+      <mat-nav-list>
+        @for (link of navBarLinks; track link) {
+          <mat-list-item
+            [routerLink]="link.url"
+            routerLinkActive
+            [routerLinkActiveOptions]="{ exact: true }"
+            #rla="routerLinkActive"
+            [activated]="rla.isActive">
+            <a matListItemTitle>{{ link.title }}</a>
+          </mat-list-item>
+        }
+      </mat-nav-list>
+    </nav>
+
+    <button mat-icon-button type="button" (click)="themeService.toggleTheme()">
+      <mat-icon>{{ themeService.isDarkTheme ? 'light_mode' : 'dark_mode' }}</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
