@@ -32,6 +32,8 @@
           @if (currentParagraph$ | async; as currentParagraph) {
             <div class="paginator px-8 py-4">
               <app-paginator
+                [prevDisabled]="(isFirst$ | async) || false"
+                [nextDisabled]="(isLast$ | async) || false"
                 (prev)="goToParagraph(currentParagraph - 1)"
                 (next)="goToParagraph(currentParagraph + 1)"></app-paginator>
             </div>

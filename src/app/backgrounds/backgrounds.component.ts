@@ -61,6 +61,6 @@ export class BackgroundsComponent implements OnInit, AfterViewInit {
   }
 
   public ngAfterViewInit(): void {
-    this.currentBackground$.subscribe(() => this.drawerContent?.scrollTo({ top: 0 }));
+    this.currentBackground$?.subscribe(() => this.drawerContent?.scrollTo({ top: 0 }));
   }
 }

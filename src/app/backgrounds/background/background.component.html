@@ -2,7 +2,9 @@
   <article>
     <h1 class="text-3xl font-bold">{{ background.roll?.value }}. {{ background.name }}</h1>
 
-    <div class="background-content flex gap-8 my-4" [ngClass]="{ 'flex-col-reverse': isMobileDevice$ | async }">
+    <div
+      class="background-content w-full flex justify-between gap-8 my-4"
+      [ngClass]="{ 'flex-col-reverse': isMobileDevice$ | async }">
       <div class="background-text">
         <p class="background-text">{{ background.text }}</p>
 

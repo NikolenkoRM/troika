@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';import { MatButtonModule } from '@angular/material/button';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-paginator',
@@ -9,6 +10,8 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angul
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaginatorComponent {
+  @Input() prevDisabled: boolean = false;
+  @Input() nextDisabled: boolean = false;
   @Output() prev = new EventEmitter<void>();
   @Output() next = new EventEmitter<void>();
 }

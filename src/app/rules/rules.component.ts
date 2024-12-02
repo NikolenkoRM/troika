@@ -11,6 +11,7 @@ import { ScreenResponsiveService } from '../services/screen-responsive.service';
 import { SidenavService } from '../services/sidenav.service';
 import { LoaderComponent } from '../shared/loader/loader.component';
 import { PaginatorComponent } from '../shared/paginator/paginator.component';
+import { IRuleArticle } from './rules';
 import { RulesService } from './rules.service';
 
 @Component({
@@ -43,7 +44,7 @@ export class RulesComponent {
   public readonly activatedRoute = inject(ActivatedRoute);
   public readonly router = inject(Router);
 
-  public readonly rules$ = this.rulesService.rules$;
+  public readonly rules$: Observable<IRuleArticle[]> = this.rulesService.rules$;
 
   public readonly currentParagraph$!: Observable<number | undefined>;
   public readonly isFirst$!: Observable<boolean>;
@@ -54,7 +55,7 @@ export class RulesComponent {
       this.currentParagraph$ = this.activatedRoute.firstChild?.params.pipe(map(params => Number(params['paragraph'])));
       this.isFirst$ = this.currentParagraph$.pipe(map(paragraph => paragraph === 1));
       this.isLast$ = this.currentParagraph$.pipe(
-        switchMap(paragraph => this.rules$.pipe(map(rules => paragraph === rules.length + 1)))
+        switchMap(paragraph => this.rules$.pipe(map(rules => paragraph === rules.length)))
       );
     }
   }
